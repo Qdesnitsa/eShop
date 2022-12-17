@@ -8,7 +8,8 @@ public class DiscountCard extends AbstractDiscount implements Serializable {
     @Serial
     private static final long serialVersionUID = -758423543028609594L;
 
-    //    private User user;
+//    private User user;
+//    private List<Check> checks;
     private int cardNumber;
 
     {
@@ -29,5 +30,38 @@ public class DiscountCard extends AbstractDiscount implements Serializable {
 
     public void setCardNumber(int cardNumber) {
         this.cardNumber = cardNumber;
+    }
+
+    public static Builder newBuilder() {
+        return new DiscountCard().new Builder();
+    }
+
+    public class Builder extends AbstractDiscount.Builder {
+
+        private Builder() {
+        }
+
+        @Override
+        public Builder setId(Long id) {
+            super.setId(id);
+            return this;
+        }
+
+        @Override
+        public Builder setValue(double value) {
+            super.setValue(value);
+            return this;
+        }
+
+        @Override
+        public Builder setDiscountType(DiscountType discountType) {
+            super.setDiscountType(discountType);
+            return this;
+        }
+
+        public Builder setCardNumber(int cardNumber) {
+            DiscountCard.this.cardNumber = cardNumber;
+            return this;
+        }
     }
 }

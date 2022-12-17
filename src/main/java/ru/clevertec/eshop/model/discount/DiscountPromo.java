@@ -37,4 +37,42 @@ public class DiscountPromo extends AbstractDiscount implements Serializable {
     public void setProductsQuantity(int productsQuantity) {
         this.productsQuantity = productsQuantity;
     }
+
+    public static DiscountPromo.Builder newBuilder() {
+        return new DiscountPromo().new Builder();
+    }
+
+    public class Builder extends AbstractDiscount.Builder {
+
+        private Builder() {
+        }
+
+        @Override
+        public DiscountPromo.Builder setId(Long id) {
+            super.setId(id);
+            return this;
+        }
+
+        @Override
+        public DiscountPromo.Builder setValue(double value) {
+            super.setValue(value);
+            return this;
+        }
+
+        @Override
+        public DiscountPromo.Builder setDiscountType(DiscountType discountType) {
+            super.setDiscountType(discountType);
+            return this;
+        }
+
+        public DiscountPromo.Builder setName(String name) {
+            DiscountPromo.this.name = name;
+            return this;
+        }
+
+        public DiscountPromo.Builder setProductsQuantity(int productsQuantity) {
+            DiscountPromo.this.productsQuantity = productsQuantity;
+            return this;
+        }
+    }
 }
