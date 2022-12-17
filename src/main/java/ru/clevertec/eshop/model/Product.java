@@ -2,9 +2,13 @@ package ru.clevertec.eshop.model;
 
 import ru.clevertec.eshop.model.discount.AbstractDiscount;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class Product {
+public class Product implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1162347528072070883L;
     private Long id;
     private String name;
     private AbstractDiscount discount;
@@ -19,6 +23,10 @@ public class Product {
         this.discount = discount;
         this.price = price;
         this.quantityAvailable = quantityAvailable;
+    }
+
+    public static ProductBuilder builder() {
+        return new ProductBuilder();
     }
 
     public Long getId() {
@@ -59,5 +67,41 @@ public class Product {
 
     public void setQuantityAvailable(int quantityAvailable) {
         this.quantityAvailable = quantityAvailable;
+    }
+
+    public static class ProductBuilder {
+        private Long id;
+        private String name;
+        private AbstractDiscount discount;
+        private BigDecimal price;
+        private int quantityAvailable;
+
+        public ProductBuilder() {
+        }
+
+        public ProductBuilder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public ProductBuilder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public ProductBuilder discount(AbstractDiscount discount) {
+            this.discount = discount;
+            return this;
+        }
+
+        public ProductBuilder price(BigDecimal price) {
+            this.price = price;
+            return this;
+        }
+
+        public ProductBuilder quantityAvailable(int quantityAvailable) {
+            this.quantityAvailable = quantityAvailable;
+            return this;
+        }
     }
 }

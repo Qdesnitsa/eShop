@@ -1,9 +1,13 @@
 package ru.clevertec.eshop.model;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class Check {
+public class Check implements Serializable {
+    @Serial
+    private static final long serialVersionUID = -9026753764235007910L;
     private Long id;
     private String shopId;
     private String cashierId;

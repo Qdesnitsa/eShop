@@ -1,6 +1,11 @@
 package ru.clevertec.eshop.model.discount;
 
-public abstract class AbstractDiscount {
+import java.io.Serial;
+import java.io.Serializable;
+
+public abstract class AbstractDiscount implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 52944389383476338L;
     private Long id;
     private double value;
     protected DiscountType discountType;

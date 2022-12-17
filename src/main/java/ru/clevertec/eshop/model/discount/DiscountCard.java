@@ -1,6 +1,12 @@
 package ru.clevertec.eshop.model.discount;
 
-public class DiscountCard extends AbstractDiscount {
+import java.io.Serial;
+import java.io.Serializable;
+
+public class DiscountCard extends AbstractDiscount implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = -758423543028609594L;
 
     //    private User user;
     private int cardNumber;
