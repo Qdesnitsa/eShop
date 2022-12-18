@@ -32,6 +32,19 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
+bootJar {
+    archiveFileName = 'eshop.jar'
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'ru.clevertec.eshop.EShopApplication'
+        )
+    }
+    enabled = false
+}
+
 tasks.named('test') {
     useJUnitPlatform()
 }

@@ -2,25 +2,21 @@ package ru.clevertec.eshop;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import ru.clevertec.eshop.dao.impl.file.PromoDAOFromFile;
-import ru.clevertec.eshop.model.card.DiscountCard;
-import ru.clevertec.eshop.model.promo.Promo;
+import ru.clevertec.eshop.controller.console.InputFromConsole;
+import ru.clevertec.eshop.service.exception.ServiceException;
 
-import java.util.List;
+import java.util.Map;
 
 @SpringBootApplication
 public class EShopApplication {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ServiceException {
+        args = new String[]{"1-1", "2-2", "2-2", "card-1234", "5-y", "yy-7"};
         SpringApplication.run(EShopApplication.class, args);
-        PromoDAOFromFile productDAOFromFile = new PromoDAOFromFile();
-        List<Promo> discountPromos = productDAOFromFile.getPromoList();
-        List<DiscountCard> discountCards = productDAOFromFile.getCardsList();
-        for (int i = 0; i < discountPromos.size(); i++) {
-            System.out.println(discountPromos.get(i));
-        }
-        for (int i = 0; i < discountCards.size(); i++) {
-            System.out.println(discountCards.get(i).getCardLevel().getDiscount());
+        InputFromConsole inputFromConsole = new InputFromConsole();
+        Map<Object, Integer> map = inputFromConsole.obtainCriteriaMap(args);
+        for (Map.Entry<Object, Integer> entry : map.entrySet()) {
+            System.out.println(entry.getKey() + ":" + entry.getValue());
         }
     }
 

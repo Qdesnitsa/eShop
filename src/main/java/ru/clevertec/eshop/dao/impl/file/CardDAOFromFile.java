@@ -5,6 +5,7 @@ import ru.clevertec.eshop.model.SearchCriteria;
 import ru.clevertec.eshop.model.card.DiscountCard;
 import ru.clevertec.eshop.dao.impl.file.construction.CardConstructor;
 import ru.clevertec.eshop.util.AppConstant;
+import ru.clevertec.eshop.util.parsing.DataParser;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -25,7 +26,7 @@ public class CardDAOFromFile implements BaseDAO {
             String line;
             while (reader.ready()) {
                 line = reader.readLine();
-                cardMap = obtainMap(line);
+                cardMap = DataParser.obtainMap(line);
                 cardsList.add(createCard(cardMap));
             }
         } catch (FileNotFoundException e) {
@@ -44,7 +45,7 @@ public class CardDAOFromFile implements BaseDAO {
             String line;
             while (reader.ready()) {
                 line = reader.readLine();
-                cardMap = obtainMap(line);
+                cardMap = DataParser.obtainMap(line);
                 if (cardMap.get(SearchCriteria.Card.ID) == cardId) {
                     discountCard = createCard(cardMap);
                 }
@@ -55,23 +56,6 @@ public class CardDAOFromFile implements BaseDAO {
             throw new RuntimeException("Error in getting data from file", e);
         }
         return Optional.ofNullable(discountCard);
-    }
-
-    private static final String SIGNS_TO_REPLACE = "(;|:|=|,|\\s)+";
-    private static final String NEW_DELIMETER = " ";
-
-    private String[] parseLine(String line) {
-        String[] parameters = line.replaceAll(SIGNS_TO_REPLACE, NEW_DELIMETER).split(NEW_DELIMETER);
-        return parameters;
-    }
-
-    private Map<String, Object> obtainMap(String line) {
-        String[] parameters = parseLine(line);
-        Map<String, Object> paramsValues = new HashMap<>();
-        for (int i = 1; i < parameters.length; i += 2) {
-            paramsValues.put(parameters[i], parameters[i + 1]);
-        }
-        return paramsValues;
     }
 
     private DiscountCard createCard(Map<String, Object> map) {

@@ -5,5 +5,5 @@ import java.util.Optional;
 
 public interface BaseDAO<T> {
     List<T> findAll();
-    Optional<T> findByID(Long productId);
+    Optional<T> findByID(Long entityId);
 }

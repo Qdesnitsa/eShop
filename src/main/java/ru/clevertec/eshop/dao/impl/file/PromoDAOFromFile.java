@@ -5,6 +5,7 @@ import ru.clevertec.eshop.model.promo.Promo;
 import ru.clevertec.eshop.dao.impl.file.construction.PromoConstructor;
 import ru.clevertec.eshop.model.SearchCriteria;
 import ru.clevertec.eshop.util.AppConstant;
+import ru.clevertec.eshop.util.parsing.DataParser;
 
 import java.io.*;
 import java.util.*;
@@ -12,6 +13,7 @@ import java.util.*;
 public class PromoDAOFromFile implements BaseDAO<Promo> {
     private final String filePath = Objects.requireNonNull(getClass().getClassLoader().getResource(AppConstant.PROMO_FILE))
             .getPath();
+
     @Override
     public List<Promo> findAll() {
         List<Promo> discountsList = new ArrayList<>();
@@ -22,7 +24,7 @@ public class PromoDAOFromFile implements BaseDAO<Promo> {
             String line;
             while (reader.ready()) {
                 line = reader.readLine();
-                discountMap = obtainMap(line);
+                discountMap = DataParser.obtainMap(line);
                 discountsList.add(createPromo(discountMap));
             }
         } catch (FileNotFoundException e) {
@@ -41,7 +43,7 @@ public class PromoDAOFromFile implements BaseDAO<Promo> {
             String line;
             while (reader.ready()) {
                 line = reader.readLine();
-                promoMap = obtainMap(line);
+                promoMap = DataParser.obtainMap(line);
                 if (promoMap.get(SearchCriteria.Card.ID) == promoId) {
                     promo = createPromo(promoMap);
                 }
@@ -52,23 +54,6 @@ public class PromoDAOFromFile implements BaseDAO<Promo> {
             throw new RuntimeException("Error in getting data from file", e);
         }
         return Optional.ofNullable(promo);
-    }
-
-    private static final String SIGNS_TO_REPLACE = "(;|:|=|,|\\s)+";
-    private static final String NEW_DELIMETER = " ";
-
-    private String[] parseLine(String line) {
-        String[] parameters = line.replaceAll(SIGNS_TO_REPLACE, NEW_DELIMETER).split(NEW_DELIMETER);
-        return parameters;
-    }
-
-    private Map<String, Object> obtainMap(String line) {
-        String[] parameters = parseLine(line);
-        Map<String, Object> paramsValues = new HashMap<>();
-        for (int i = 1; i < parameters.length; i += 2) {
-            paramsValues.put(parameters[i], parameters[i + 1]);
-        }
-        return paramsValues;
     }
 
     private Promo createPromo(Map<String, Object> map) {
