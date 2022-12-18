@@ -1,6 +1,6 @@
-package ru.clevertec.eshop.model;
+package ru.clevertec.eshop.model.product;
 
-import ru.clevertec.eshop.model.discount.AbstractDiscount;
+import ru.clevertec.eshop.model.promo.Promo;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -11,14 +11,15 @@ public class Product implements Serializable {
     private static final long serialVersionUID = 1162347528072070883L;
     private Long id;
     private String name;
-    private AbstractDiscount discount;
+    private Promo discount;
     private BigDecimal price;
     private int quantityAvailable;
 
     public Product() {
     }
 
-    public Product(String name, AbstractDiscount discount, BigDecimal price, int quantityAvailable) {
+    public Product(Long id, String name, Promo discount, BigDecimal price, int quantityAvailable) {
+        this.id = id;
         this.name = name;
         this.discount = discount;
         this.price = price;
@@ -45,11 +46,11 @@ public class Product implements Serializable {
         this.name = name;
     }
 
-    public AbstractDiscount getDiscount() {
+    public Promo getDiscount() {
         return discount;
     }
 
-    public void setDiscount(AbstractDiscount discount) {
+    public void setDiscount(Promo discount) {
         this.discount = discount;
     }
 
@@ -72,7 +73,7 @@ public class Product implements Serializable {
     public static class ProductBuilder {
         private Long id;
         private String name;
-        private AbstractDiscount discount;
+        private Promo discount;
         private BigDecimal price;
         private int quantityAvailable;
 
@@ -89,7 +90,7 @@ public class Product implements Serializable {
             return this;
         }
 
-        public ProductBuilder discount(AbstractDiscount discount) {
+        public ProductBuilder discount(Promo discount) {
             this.discount = discount;
             return this;
         }
@@ -102,6 +103,10 @@ public class Product implements Serializable {
         public ProductBuilder quantityAvailable(int quantityAvailable) {
             this.quantityAvailable = quantityAvailable;
             return this;
+        }
+
+        public Product build() {
+            return new Product(this.id, this.name, this.discount, this.price, this.quantityAvailable);
         }
     }
 }

@@ -1,5 +1,7 @@
 package ru.clevertec.eshop.model;
 
+import ru.clevertec.eshop.model.product.Product;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;

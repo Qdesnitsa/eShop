@@ -1,20 +1,34 @@
 package ru.clevertec.eshop.dao;
 
-import ru.clevertec.eshop.dao.impl.ProductDAOFromDatabase;
-import ru.clevertec.eshop.dao.impl.ProductDAOFromFile;
+import ru.clevertec.eshop.dao.impl.database.ProductDAOFromDatabase;
+import ru.clevertec.eshop.dao.impl.file.CardDAOFromFile;
+import ru.clevertec.eshop.dao.impl.file.ProductDAOFromFile;
+import ru.clevertec.eshop.dao.impl.file.PromoDAOFromFile;
 
 public final class DAOFactory {
     private static final DAOFactory instance = new DAOFactory();
 
-    private final ProductDAO productDAOFromFile = new ProductDAOFromFile();
-    private final ProductDAO productDAOFromDatabase = new ProductDAOFromDatabase();
+    private final BaseDAO productDAOFromFile = new ProductDAOFromFile();
+    private final BaseDAO cardDAOFromFile = new CardDAOFromFile();
+    private final BaseDAO promoDAOFromFile = new PromoDAOFromFile();
+    private final BaseDAO productDAOFromDatabase = new ProductDAOFromDatabase();
 
-    private DAOFactory() {}
+    private DAOFactory() {
+    }
 
-    public ProductDAO getProductDAOFromFile() {
+    public BaseDAO getProductDAOFromFile() {
         return productDAOFromFile;
     }
-    public ProductDAO getProductDAOFromDatabase() {
+
+    public BaseDAO getCardDAOFromFile() {
+        return cardDAOFromFile;
+    }
+
+    public BaseDAO getPromoDAOFromFile() {
+        return promoDAOFromFile;
+    }
+
+    public BaseDAO getProductDAOFromDatabase() {
         return productDAOFromDatabase;
     }
 
