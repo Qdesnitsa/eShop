@@ -1,5 +1,8 @@
 package ru.clevertec.eshop.service.impl;
 
+import ru.clevertec.eshop.dao.DAOFactory;
+import ru.clevertec.eshop.dao.FactoryProvider;
+import ru.clevertec.eshop.dao.impl.file.CheckDAO;
 import ru.clevertec.eshop.dao.impl.file.ProductDAO;
 import ru.clevertec.eshop.dao.impl.file.impl.ProductDAOFromFile;
 import ru.clevertec.eshop.model.product.Product;
@@ -13,18 +16,19 @@ import java.util.*;
 import static java.lang.Integer.valueOf;
 import static java.lang.Long.parseLong;
 
-public class ProductServiceImpl implements ProductService {
+public class ProductServiceImpl implements ProductService<Product> {
     private static final String CARD = "card";
-    ProductDAO productBaseDAO = new ProductDAOFromFile();
+    FactoryProvider factoryProvider = DAOFactory.getInstance();
+    ProductDAO productDAO = factoryProvider.getProductDAO();
 
     @Override
-    public List findAll() {
-        return null;
+    public List<Product> findAll() {
+        return productDAO.findAll();
     }
 
     @Override
-    public Optional findByID(Long entityId) {
-        return Optional.empty();
+    public Optional<Product> findByID(Long entityId) {
+        return productDAO.findByID(entityId);
     }
 
     public List<Product> obtainValidatedProducts(String[] args) throws ServiceException {
@@ -54,7 +58,7 @@ public class ProductServiceImpl implements ProductService {
         List<Long> notExistingProductId = new ArrayList<>();
         for (Map.Entry<String, Integer> entry : inputCriteria.entrySet()) {
             if (!entry.getKey().equalsIgnoreCase(CARD)) {
-                Optional<Product> product = productBaseDAO.findByID(parseLong(entry.getKey()));
+                Optional<Product> product = productDAO.findByID(parseLong(entry.getKey()));
                 if (product.isPresent()) {
                     productList.add(product.get());
                 } else {

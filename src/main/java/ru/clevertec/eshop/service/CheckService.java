@@ -1,9 +1,7 @@
 package ru.clevertec.eshop.service;
 
-import java.util.List;
-import java.util.Optional;
+import java.io.IOException;
 
-public interface CheckService<T> {
-    List<T> findAll();
-    Optional<T> findByID(Long entityId);
+public interface CheckService<T, S> {
+    boolean save(S entity) throws IOException;
 }

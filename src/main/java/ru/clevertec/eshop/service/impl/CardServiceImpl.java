@@ -1,7 +1,8 @@
 package ru.clevertec.eshop.service.impl;
 
+import ru.clevertec.eshop.dao.DAOFactory;
+import ru.clevertec.eshop.dao.FactoryProvider;
 import ru.clevertec.eshop.dao.impl.file.CardDAO;
-import ru.clevertec.eshop.dao.impl.file.impl.CardDAOFromFile;
 import ru.clevertec.eshop.model.card.DiscountCard;
 import ru.clevertec.eshop.service.CardService;
 import ru.clevertec.eshop.service.exception.ServiceException;
@@ -15,16 +16,18 @@ import java.util.Optional;
 
 import static java.lang.Integer.valueOf;
 
-public class CardServiceImpl implements CardService {
+public class CardServiceImpl implements CardService<DiscountCard> {
+    FactoryProvider factoryProvider = DAOFactory.getInstance();
+    CardDAO cardDAO = factoryProvider.getCardDAO();
 
     @Override
-    public List findAll() {
-        return null;
+    public List<DiscountCard> findAll() {
+        return cardDAO.findAll();
     }
 
     @Override
-    public Optional findByID(Long entityId) {
-        return Optional.empty();
+    public Optional<DiscountCard> findByID(Long entityId) {
+        return cardDAO.findByID(entityId);
     }
 
     @Override
@@ -32,7 +35,6 @@ public class CardServiceImpl implements CardService {
         return Optional.empty();
     }
     private static final String CARD = "card";
-    CardDAO cardBaseDAO = new CardDAOFromFile();
 
     public Optional<DiscountCard> obtainValidatedCard(String[] args) throws ServiceException {
         Map<String, Integer> map = obtainValidatedCriteria(args);
@@ -43,7 +45,7 @@ public class CardServiceImpl implements CardService {
     public Optional<DiscountCard> checkDiscountCardById(Map<String, Integer> map) throws ServiceException {
         Optional<DiscountCard> discountCard = null;
         if (map.containsKey(CARD)) {
-            discountCard = cardBaseDAO.findCardByNumber(Integer.parseInt(map.get(CARD).toString()));
+            discountCard = cardDAO.findCardByNumber(Integer.parseInt(map.get(CARD).toString()));
             if (discountCard.isEmpty()) {
                 throw new ServiceException("Provided card number " + map.get(CARD) + " does not exist in database");
             }

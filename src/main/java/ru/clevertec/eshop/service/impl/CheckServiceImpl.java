@@ -1,11 +1,16 @@
 package ru.clevertec.eshop.service.impl;
 
+import ru.clevertec.eshop.dao.DAOFactory;
+import ru.clevertec.eshop.dao.FactoryProvider;
+import ru.clevertec.eshop.dao.impl.file.CardDAO;
+import ru.clevertec.eshop.dao.impl.file.CheckDAO;
 import ru.clevertec.eshop.model.Check;
 import ru.clevertec.eshop.model.card.DiscountCard;
 import ru.clevertec.eshop.model.product.Product;
 import ru.clevertec.eshop.service.CheckService;
 import ru.clevertec.eshop.service.exception.ServiceException;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -15,18 +20,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class CheckServiceImpl implements CheckService {
+public class CheckServiceImpl implements CheckService<Check, String> {
     private static final String DATE_AND_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
     private final AtomicLong idGenerator = new AtomicLong(0);
+    FactoryProvider factoryProvider = DAOFactory.getInstance();
+    CheckDAO checkDAO = factoryProvider.getCheckDAO();
 
     @Override
-    public List findAll() {
-        return null;
-    }
-
-    @Override
-    public Optional findByID(Long entityId) {
-        return Optional.empty();
+    public boolean save(String entity) throws IOException {
+        return checkDAO.save(entity);
     }
 
     public double obtainDiscountFromCard(Optional<DiscountCard> card) {

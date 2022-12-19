@@ -1,9 +1,8 @@
 package ru.clevertec.eshop.dao.impl.file;
 
-import java.util.List;
-import java.util.Optional;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
-public interface CheckDAO<T> {
-    List<T> findAll();
-    Optional<T> findByID(Long entityId);
+public interface CheckDAO<T,S> {
+    boolean save(S entity) throws IOException;
 }

@@ -1,5 +1,6 @@
 package ru.clevertec.eshop.controller.console;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,10 +16,11 @@ public class InputDataProcessor {
     CardServiceImpl cardService = new CardServiceImpl();
     CheckServiceImpl checkService = new CheckServiceImpl();
 
-    public String obtainCheck(String[] args) throws ServiceException {
+    public String obtainCheck(String[] args) throws ServiceException, IOException {
         List<Product> products = productService.obtainValidatedProducts(args);
         Optional<DiscountCard> discountCard = cardService.obtainValidatedCard(args);
         String check = checkService.obtainCheck(products, discountCard);
+        checkService.save(check);
         System.out.println(check);
         return check;
     }
