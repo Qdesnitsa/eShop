@@ -51,6 +51,7 @@ public class CheckServiceImpl implements CheckService<Check, String> {
         return paymentForSameProductId;
     }
 
+    @Override
     public String obtainCheck(List<Product> products, Optional<DiscountCard> card) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_AND_TIME_FORMAT);
 
@@ -66,14 +67,14 @@ public class CheckServiceImpl implements CheckService<Check, String> {
                 .append("\n")
                 .append(String.format("%-12s%-10d", "ShopID", check.getShopId()))
                 .append("\n")
-                .append(String.format("%-10s%-10s%-10s%-10s%-10s\n", "Qty", "Product", "Price", "Discount", "Total"));
+                .append(String.format("%-10s%-10s%-10s%-10s%-10s\n", "Qty", "Product", "Price", "Discount%", "Total"));
         for (Product product : products) {
             builder.append(String.format("%-10d", product.getQuantity()))
                     .append(String.format("%-10s", product.getName()))
 
                     .append(String.format("%-10s", product.getPrice()))
 
-                    .append(String.format("%-10s", product.getDiscount().getValue()));
+                    .append(String.format("%-10s", (product.getDiscount().getValue()*100)));
 
             checkSum = checkSum.add(obtainDiscountFromPromo(product));
             builder.append(obtainDiscountFromPromo(product))
@@ -85,8 +86,8 @@ public class CheckServiceImpl implements CheckService<Check, String> {
                 .append("\n");
         if (discountFromCard != 0) {
             BigDecimal totalAmountToPay = checkSum.subtract(checkSum.multiply(BigDecimal.valueOf(discountFromCard)));
-            builder.append(String.format("%-40s", "Discount sum due to discount card: "))
-                    .append(discountFromCard)
+            builder.append(String.format("%-40s", "Discount % due to discount card: "))
+                    .append(discountFromCard * 100)
                     .append("\n")
                     .append(String.format("%-40s", "Total payment after all discounts: "))
                     .append(totalAmountToPay.setScale(2, RoundingMode.UP));

@@ -31,6 +31,7 @@ public class ProductServiceImpl implements ProductService<Product> {
         return productDAO.findByID(entityId);
     }
 
+    @Override
     public List<Product> obtainValidatedProducts(String[] args) throws ServiceException {
         Map<String, Integer> map = obtainValidatedCriteria(args);
         List<Product> correctProductsId = checkExistingProductId(map);

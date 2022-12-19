@@ -36,6 +36,7 @@ public class CardServiceImpl implements CardService<DiscountCard> {
     }
     private static final String CARD = "card";
 
+    @Override
     public Optional<DiscountCard> obtainValidatedCard(String[] args) throws ServiceException {
         Map<String, Integer> map = obtainValidatedCriteria(args);
         Optional<DiscountCard> discountCard = checkDiscountCardById(map);

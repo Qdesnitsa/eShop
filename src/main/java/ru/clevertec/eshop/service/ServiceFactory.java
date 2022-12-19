@@ -1,20 +1,12 @@
 package ru.clevertec.eshop.service;
 
-import ru.clevertec.eshop.service.impl.ProductServiceImpl;
-
 public final class ServiceFactory {
-    private static final ServiceFactory instance = new ServiceFactory();
+    private static final ServiceFactoryProvider instance = new ServiceFactoryProvider1();
 
-    private final ProductService productService = new ProductServiceImpl();
-
-    private ServiceFactory() {}
-
-    public ProductService getProductService() {
-
-        return productService;
+    private ServiceFactory() {
     }
 
-    public static ServiceFactory getInstance() {
+    public static ServiceFactoryProvider getInstance() {
         return instance;
     }
 }
