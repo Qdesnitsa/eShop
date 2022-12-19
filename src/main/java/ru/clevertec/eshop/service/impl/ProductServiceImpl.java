@@ -2,9 +2,7 @@ package ru.clevertec.eshop.service.impl;
 
 import ru.clevertec.eshop.dao.DAOFactory;
 import ru.clevertec.eshop.dao.FactoryProvider;
-import ru.clevertec.eshop.dao.impl.file.CheckDAO;
 import ru.clevertec.eshop.dao.impl.file.ProductDAO;
-import ru.clevertec.eshop.dao.impl.file.impl.ProductDAOFromFile;
 import ru.clevertec.eshop.model.product.Product;
 import ru.clevertec.eshop.service.ProductService;
 import ru.clevertec.eshop.service.exception.ServiceException;

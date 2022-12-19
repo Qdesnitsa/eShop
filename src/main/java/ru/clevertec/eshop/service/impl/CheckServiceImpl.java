@@ -2,19 +2,15 @@ package ru.clevertec.eshop.service.impl;
 
 import ru.clevertec.eshop.dao.DAOFactory;
 import ru.clevertec.eshop.dao.FactoryProvider;
-import ru.clevertec.eshop.dao.impl.file.CardDAO;
 import ru.clevertec.eshop.dao.impl.file.CheckDAO;
 import ru.clevertec.eshop.model.Check;
 import ru.clevertec.eshop.model.card.DiscountCard;
 import ru.clevertec.eshop.model.product.Product;
 import ru.clevertec.eshop.service.CheckService;
-import ru.clevertec.eshop.service.exception.ServiceException;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
@@ -67,7 +63,7 @@ public class CheckServiceImpl implements CheckService<Check, String> {
                 .append("\n")
                 .append(String.format("%-12s%-10d", "ShopID", check.getShopId()))
                 .append("\n")
-                .append(String.format("%-10s%-10s%-10s%-10s%-10s\n", "Qty", "Product", "Price", "Discount%", "Total"));
+                .append(String.format("%-10s%-10s%-10s%-10s%-10s\n", "Qty", "Product", "Price", "Discount %", "Total"));
         for (Product product : products) {
             builder.append(String.format("%-10d", product.getQuantity()))
                     .append(String.format("%-10s", product.getName()))

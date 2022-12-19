@@ -9,12 +9,10 @@ import java.io.IOException;
 
 @SpringBootApplication
 public class EShopApplication {
-
     public static void main(String[] args) throws ServiceException, IOException {
         args = new String[]{"1-1", "2-2", "2-20", "card-5678"};
         SpringApplication.run(EShopApplication.class, args);
         InputDataProcessor inputFromConsole = new InputDataProcessor();
         inputFromConsole.obtainCheck(args);
     }
-
 }

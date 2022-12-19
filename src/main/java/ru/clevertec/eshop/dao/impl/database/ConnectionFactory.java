@@ -1,20 +1,26 @@
 package ru.clevertec.eshop.dao.impl.database;
 
 import ru.clevertec.eshop.dao.exception.DAOException;
+import ru.clevertec.eshop.util.PropertiesReader;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class ConnectionFactory {
-    private static String url = "jdbc:postgresql://localhost:5432/eshop";
-    private static String password = "2cool4u";
-    private static String user = "postgres";
-    private static String driver = "org.postgresql.Driver";
+    private static final String DB_PROPERTIES = "application.properties";
+    private static final Properties properties = PropertiesReader.getProperties(DB_PROPERTIES);
+    private static final String URL = properties.getProperty("db.url");
+    private static final String PASSWORD = properties.getProperty("db.password");
+    private static final String USER = properties.getProperty("db.username");
+    private static final String DRIVER = properties.getProperty("db.driver");
+
+
     public static Connection getConnection() throws DAOException {
         try {
-            Class.forName(driver);
-            return DriverManager.getConnection(url, user, password);
+            Class.forName(DRIVER);
+            return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (ClassNotFoundException e) {
             throw new DAOException("Can not find database driver", e);
         } catch (SQLException ex) {
