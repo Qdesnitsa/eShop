@@ -1,11 +1,9 @@
 package ru.clevertec.eshop.service;
 
-import ru.clevertec.eshop.model.product.Product;
-
 import java.util.List;
 import java.util.Optional;
 
-public interface ProductService<T> {
+public interface CheckService<T> {
     List<T> findAll();
     Optional<T> findByID(Long entityId);
 }

@@ -37,8 +37,8 @@ public class DataValidator {
             }
         }
         if (!failedValidatedElementsList.isEmpty()) {
-            throw new ServiceException("Invalid input of elements" +
-                    failedValidatedElementsList + " + Please check it and try again");
+            throw new ServiceException("Invalid input of elementsn" +
+                    failedValidatedElementsList + " + Please check it and try again.");
         }
         return validatedList;
     }

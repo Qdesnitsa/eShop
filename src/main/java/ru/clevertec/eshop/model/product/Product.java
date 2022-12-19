@@ -13,7 +13,7 @@ public class Product implements Serializable {
     private String name;
     private Promo discount;
     private BigDecimal price;
-    private int quantityAvailable;
+    private int quantity;
 
     public Product() {
     }
@@ -23,7 +23,7 @@ public class Product implements Serializable {
         this.name = name;
         this.discount = discount;
         this.price = price;
-        this.quantityAvailable = quantityAvailable;
+        this.quantity = quantityAvailable;
     }
 
     public static ProductBuilder builder() {
@@ -62,12 +62,23 @@ public class Product implements Serializable {
         this.price = price;
     }
 
-    public int getQuantityAvailable() {
-        return quantityAvailable;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setQuantityAvailable(int quantityAvailable) {
-        this.quantityAvailable = quantityAvailable;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", discount=" + discount +
+                ", price=" + price +
+                ", quantityAvailable=" + quantity +
+                "; ";
     }
 
     public static class ProductBuilder {

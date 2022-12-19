@@ -11,17 +11,20 @@ public class Check implements Serializable {
     @Serial
     private static final long serialVersionUID = -9026753764235007910L;
     private Long id;
-    private String shopId;
-    private String cashierId;
+    private int shopId;
     private LocalDateTime dateTime;
     private List<Product> products;
+
+    {
+        shopId = 100;
+        dateTime = LocalDateTime.now();
+    }
 
     public Check() {
     }
 
-    public Check(String shopId, String cashierId, LocalDateTime dateTime, List<Product> products) {
+    public Check(int shopId, LocalDateTime dateTime, List<Product> products) {
         this.shopId = shopId;
-        this.cashierId = cashierId;
         this.dateTime = dateTime;
         this.products = products;
     }
@@ -34,20 +37,12 @@ public class Check implements Serializable {
         this.id = id;
     }
 
-    public String getShopId() {
+    public int getShopId() {
         return shopId;
     }
 
-    public void setShopId(String shopId) {
+    public void setShopId(int shopId) {
         this.shopId = shopId;
-    }
-
-    public String getCashierId() {
-        return cashierId;
-    }
-
-    public void setCashierId(String cashierId) {
-        this.cashierId = cashierId;
     }
 
     public LocalDateTime getDateTime() {

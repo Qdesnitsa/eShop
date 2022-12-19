@@ -10,11 +10,10 @@ import static java.lang.Integer.parseInt;
 import static java.lang.Long.parseLong;
 
 public class CardConstructor implements EntityConstructor<DiscountCard> {
-    private static DiscountCard discountCard;
 
     @Override
     public DiscountCard constructEntity(Map<String, Object> map) {
-        return discountCard = DiscountCard.newBuilder()
+        return DiscountCard.newBuilder()
                 .setId(parseLong((String) map.get(SearchCriteria.Card.ID.toString())))
                 .setCardNumber(parseInt((String) map.get(SearchCriteria.Card.NUMBER.toString())))
                 .setCardLevel(CardLevel.valueOf((String) map.get(SearchCriteria.Card.LEVEL.toString())))

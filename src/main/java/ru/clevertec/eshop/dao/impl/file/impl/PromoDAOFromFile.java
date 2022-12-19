@@ -1,6 +1,6 @@
-package ru.clevertec.eshop.dao.impl.file;
+package ru.clevertec.eshop.dao.impl.file.impl;
 
-import ru.clevertec.eshop.dao.BaseDAO;
+import ru.clevertec.eshop.dao.impl.file.PromoDAO;
 import ru.clevertec.eshop.model.promo.Promo;
 import ru.clevertec.eshop.dao.impl.file.construction.PromoConstructor;
 import ru.clevertec.eshop.model.SearchCriteria;
@@ -10,7 +10,9 @@ import ru.clevertec.eshop.util.parsing.DataParser;
 import java.io.*;
 import java.util.*;
 
-public class PromoDAOFromFile implements BaseDAO<Promo> {
+import static java.lang.Long.parseLong;
+
+public class PromoDAOFromFile implements PromoDAO<Promo> {
     private final String filePath = Objects.requireNonNull(getClass().getClassLoader().getResource(AppConstant.PROMO_FILE))
             .getPath();
 
@@ -44,7 +46,7 @@ public class PromoDAOFromFile implements BaseDAO<Promo> {
             while (reader.ready()) {
                 line = reader.readLine();
                 promoMap = DataParser.obtainMap(line);
-                if (promoMap.get(SearchCriteria.Card.ID) == promoId) {
+                if (parseLong((String) promoMap.get(SearchCriteria.Card.ID.toString())) == promoId) {
                     promo = createPromo(promoMap);
                 }
             }

@@ -1,8 +1,6 @@
-package ru.clevertec.eshop.dao.impl.file;
+package ru.clevertec.eshop.dao.impl.file.impl;
 
-import ru.clevertec.eshop.dao.BaseDAO;
-import ru.clevertec.eshop.dao.exception.DAOException;
-import ru.clevertec.eshop.dao.impl.file.construction.CardConstructor;
+import ru.clevertec.eshop.dao.impl.file.ProductDAO;
 import ru.clevertec.eshop.dao.impl.file.construction.ProductConstructor;
 import ru.clevertec.eshop.model.SearchCriteria;
 import ru.clevertec.eshop.model.product.Product;
@@ -15,7 +13,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
-public class ProductDAOFromFile implements BaseDAO {
+import static java.lang.Long.parseLong;
+
+public class ProductDAOFromFile implements ProductDAO<Product> {
     private final String filePath = Objects.requireNonNull(getClass().getClassLoader()
             .getResource(AppConstant.PRODUCTS_FILE)).getPath();
 
@@ -46,15 +46,16 @@ public class ProductDAOFromFile implements BaseDAO {
         Product product = null;
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
-            while (reader.ready()) {
+            while (reader.ready() && product == null) {
                 line = reader.readLine();
                 productMap = DataParser.obtainMap(line);
-                if (productMap.get(SearchCriteria.Card.ID) == productId) {
+                if (parseLong((String) productMap.get(SearchCriteria.Product.ID.toString())) == (productId)) {
                     product = createProduct(productMap);
+                    break;
                 }
             }
         } catch (FileNotFoundException e) {
-            throw new RuntimeException("Check file path to cards info. File is not fount", e);
+            throw new RuntimeException("Check file path to products info. File is not fount", e);
         } catch (IOException e) {
             throw new RuntimeException("Error in getting data from file", e);
         }

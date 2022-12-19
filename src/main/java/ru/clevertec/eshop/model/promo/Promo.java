@@ -55,6 +55,16 @@ public class Promo implements Serializable {
         this.productsQuantity = productsQuantity;
     }
 
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", value=" + value +
+                ", productsQuantity=" + productsQuantity +
+                "; ";
+    }
+
     public static Promo.Builder newBuilder() {
         return new Promo().new Builder();
     }

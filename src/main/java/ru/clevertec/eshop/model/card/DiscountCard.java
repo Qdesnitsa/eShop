@@ -48,6 +48,15 @@ public class DiscountCard implements Serializable {
         this.cardLevel = cardLevel;
     }
 
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() +
+                "id=" + id +
+                ", cardLevel=" + cardLevel +
+                ", cardNumber=" + cardNumber +
+                "; ";
+    }
+
     public static Builder newBuilder() {
         return new DiscountCard().new Builder();
     }
