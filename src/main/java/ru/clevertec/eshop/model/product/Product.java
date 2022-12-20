@@ -26,6 +26,17 @@ public class Product implements Serializable {
         this.quantity = quantityAvailable;
     }
 
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", discount=" + discount +
+                ", price=" + price +
+                ", quantityAvailable=" + quantity +
+                "; ";
+    }
+
     public static ProductBuilder builder() {
         return new ProductBuilder();
     }
@@ -68,17 +79,6 @@ public class Product implements Serializable {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-    }
-
-    @Override
-    public String toString() {
-        return getClass().getSimpleName() +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", discount=" + discount +
-                ", price=" + price +
-                ", quantityAvailable=" + quantity +
-                "; ";
     }
 
     public static class ProductBuilder {

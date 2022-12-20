@@ -9,7 +9,7 @@ public class DiscountCard implements Serializable {
     private static final long serialVersionUID = -758423543028609594L;
     private Long id;
 
-    //    private User user;
+//    private User user;
 //    private List<Check> checks;
     private CardLevel cardLevel;
     private int cardNumber;

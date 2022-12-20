@@ -60,4 +60,46 @@ public class Check implements Serializable {
     public void setProducts(List<Product> products) {
         this.products = products;
     }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() +
+                "id=" + id +
+                ", shopId=" + shopId +
+                ", dateTime=" + dateTime +
+                ", products=" + products +
+                "; ";
+    }
+
+    public static class Builder {
+        private final Check newCheck;
+
+        public Builder() {
+            newCheck = new Check();
+        }
+
+        public Builder setId(Long id) {
+            newCheck.id = id;
+            return this;
+        }
+
+        public Builder setShopId(int shopId) {
+            newCheck.shopId = shopId;
+            return this;
+        }
+
+        public Builder setDateTime(LocalDateTime dateTime) {
+            newCheck.dateTime = dateTime;
+            return this;
+        }
+
+        public Builder setProducts(List<Product> products) {
+            newCheck.products = products;
+            return this;
+        }
+
+        public Check build() {
+            return newCheck;
+        }
+    }
 }

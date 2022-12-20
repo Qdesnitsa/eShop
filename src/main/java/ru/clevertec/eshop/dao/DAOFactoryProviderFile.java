@@ -1,15 +1,15 @@
 package ru.clevertec.eshop.dao;
 
-import ru.clevertec.eshop.dao.impl.file.CardDAO;
-import ru.clevertec.eshop.dao.impl.file.CheckDAO;
-import ru.clevertec.eshop.dao.impl.file.ProductDAO;
-import ru.clevertec.eshop.dao.impl.file.PromoDAO;
-import ru.clevertec.eshop.dao.impl.file.impl.CardDAOFromFile;
-import ru.clevertec.eshop.dao.impl.file.impl.CheckDAOFromFile;
-import ru.clevertec.eshop.dao.impl.file.impl.ProductDAOFromFile;
-import ru.clevertec.eshop.dao.impl.file.impl.PromoDAOFromFile;
+import ru.clevertec.eshop.dao.source.CardDAO;
+import ru.clevertec.eshop.dao.source.CheckDAO;
+import ru.clevertec.eshop.dao.source.ProductDAO;
+import ru.clevertec.eshop.dao.source.PromoDAO;
+import ru.clevertec.eshop.dao.source.file.CardDAOFromFile;
+import ru.clevertec.eshop.dao.source.file.CheckDAOFromFile;
+import ru.clevertec.eshop.dao.source.file.ProductDAOFromFile;
+import ru.clevertec.eshop.dao.source.file.PromoDAOFromFile;
 
-public class FactoryProviderFile implements FactoryProvider {
+public class DAOFactoryProviderFile implements DAOFactoryProvider {
     private final ProductDAO productDAOFromFile = new ProductDAOFromFile();
     private final CardDAO cardDAOFromFile = new CardDAOFromFile();
     private final PromoDAO promoDAOFromFile = new PromoDAOFromFile();

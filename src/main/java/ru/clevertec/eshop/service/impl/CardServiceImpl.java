@@ -1,8 +1,9 @@
 package ru.clevertec.eshop.service.impl;
 
 import ru.clevertec.eshop.dao.DAOFactory;
-import ru.clevertec.eshop.dao.FactoryProvider;
-import ru.clevertec.eshop.dao.impl.file.CardDAO;
+import ru.clevertec.eshop.dao.DAOFactoryProvider;
+import ru.clevertec.eshop.dao.exception.DAOException;
+import ru.clevertec.eshop.dao.source.CardDAO;
 import ru.clevertec.eshop.model.card.DiscountCard;
 import ru.clevertec.eshop.service.CardService;
 import ru.clevertec.eshop.service.exception.ServiceException;
@@ -17,36 +18,52 @@ import java.util.Optional;
 import static java.lang.Integer.valueOf;
 
 public class CardServiceImpl implements CardService<DiscountCard> {
-    FactoryProvider factoryProvider = DAOFactory.getInstance();
-    CardDAO cardDAO = factoryProvider.getCardDAO();
+    private DAOFactoryProvider factoryProvider = DAOFactory.getInstance();
+    private CardDAO cardDAO = factoryProvider.getCardDAO();
 
     @Override
-    public List<DiscountCard> findAll() {
-        return cardDAO.findAll();
+    public List<DiscountCard> findAll() throws ServiceException {
+        try {
+            return cardDAO.findAll();
+        } catch (DAOException e) {
+            throw new ServiceException("Failed attempt to find all cards in the database", e);
+        }
     }
 
     @Override
-    public Optional<DiscountCard> findByID(Long entityId) {
-        return cardDAO.findByID(entityId);
+    public Optional<DiscountCard> findByID(Long entityId) throws ServiceException {
+        try {
+            return cardDAO.findByID(entityId);
+        } catch (DAOException e) {
+            throw new ServiceException("Failed attempt to find card by id in the database", e);
+        }
     }
 
     @Override
-    public Optional<DiscountCard> findCardByNumber(int cardNumber) {
-        return Optional.empty();
+    public Optional<DiscountCard> findCardByNumber(int cardNumber) throws ServiceException {
+        try {
+            return cardDAO.findCardByNumber(cardNumber);
+        } catch (DAOException e) {
+            throw new ServiceException("Failed attempt to find card by id in the database", e);
+        }
     }
     private static final String CARD = "card";
 
     @Override
     public Optional<DiscountCard> obtainValidatedCard(String[] args) throws ServiceException {
         Map<String, Integer> map = obtainValidatedCriteria(args);
-        Optional<DiscountCard> discountCard = checkDiscountCardById(map);
+        Optional<DiscountCard> discountCard = checkDiscountCardByNumber(map);
         return discountCard;
     }
 
-    public Optional<DiscountCard> checkDiscountCardById(Map<String, Integer> map) throws ServiceException {
+    public Optional<DiscountCard> checkDiscountCardByNumber(Map<String, Integer> map) throws ServiceException {
         Optional<DiscountCard> discountCard = null;
         if (map.containsKey(CARD)) {
-            discountCard = cardDAO.findCardByNumber(Integer.parseInt(map.get(CARD).toString()));
+            try {
+                discountCard = cardDAO.findCardByNumber(Integer.parseInt(map.get(CARD).toString()));
+            } catch (DAOException e) {
+                throw new ServiceException("Provided card number " + map.get(CARD) + " does not exist in database");
+            }
             if (discountCard.isEmpty()) {
                 throw new ServiceException("Provided card number " + map.get(CARD) + " does not exist in database");
             }

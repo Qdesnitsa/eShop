@@ -1,6 +1,5 @@
-package ru.clevertec.eshop.dao.impl.database;
+package ru.clevertec.eshop.dao.source.database;
 
-import ru.clevertec.eshop.dao.exception.DAOException;
 import ru.clevertec.eshop.util.PropertiesReader;
 
 import java.sql.Connection;
@@ -17,14 +16,16 @@ public class ConnectionFactory {
     private static final String DRIVER = properties.getProperty("db.driver");
 
 
-    public static Connection getConnection() throws DAOException {
+    public static Connection getConnection() {
+        Connection connection = null;
         try {
             Class.forName(DRIVER);
-            return DriverManager.getConnection(URL, USER, PASSWORD);
+            connection = DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (ClassNotFoundException e) {
-            throw new DAOException("Can not find database driver", e);
+            //LOGGER.error(e);
         } catch (SQLException ex) {
-            throw new DAOException("Can not get connection", ex);
+            //LOGGER.error(e);
         }
+        return connection;
     }
 }

@@ -5,7 +5,7 @@ import ru.clevertec.eshop.service.impl.CheckServiceImpl;
 import ru.clevertec.eshop.service.impl.ProductServiceImpl;
 import ru.clevertec.eshop.service.impl.PromoServiceImpl;
 
-public class ServiceFactoryProvider2 implements ServiceFactoryProvider {
+public class ServiceFactoryProviderFirst implements ServiceFactoryProvider {
     private final ProductService productService = new ProductServiceImpl();
     private final PromoService promoService = new PromoServiceImpl();
     private final CardService cardService = new CardServiceImpl();

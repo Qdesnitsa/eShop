@@ -65,36 +65,33 @@ public class Promo implements Serializable {
                 "; ";
     }
 
-    public static Promo.Builder newBuilder() {
-        return new Promo().new Builder();
-    }
-
-    public class Builder {
-
-        private Builder() {
+    public static class Builder {
+        private final Promo newPromo;
+        public Builder() {
+            newPromo = new Promo();
         }
 
-        public Promo.Builder setId(Long id) {
-            Promo.this.setId(id);
+        public Builder setId(Long id) {
+            newPromo.id = id;
             return this;
         }
 
-        public Promo.Builder setValue(double value) {
-            Promo.this.setValue(value);
+        public Builder setValue(double value) {
+            newPromo.value = value;
             return this;
         }
 
-        public Promo.Builder setName(String name) {
-            Promo.this.name = name;
+        public Builder setName(String name) {
+            newPromo.name = name;
             return this;
         }
 
         public Promo.Builder setProductsQuantity(int productsQuantity) {
-            Promo.this.productsQuantity = productsQuantity;
+            newPromo.productsQuantity = productsQuantity;
             return this;
         }
         public Promo build() {
-            return Promo.this;
+            return newPromo;
         }
     }
 }

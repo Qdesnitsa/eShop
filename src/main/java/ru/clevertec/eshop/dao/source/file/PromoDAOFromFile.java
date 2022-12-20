@@ -1,8 +1,9 @@
-package ru.clevertec.eshop.dao.impl.file.impl;
+package ru.clevertec.eshop.dao.source.file;
 
-import ru.clevertec.eshop.dao.impl.file.PromoDAO;
+import ru.clevertec.eshop.dao.exception.DAOException;
+import ru.clevertec.eshop.dao.source.PromoDAO;
 import ru.clevertec.eshop.model.promo.Promo;
-import ru.clevertec.eshop.dao.impl.file.construction.PromoConstructor;
+import ru.clevertec.eshop.dao.construction.PromoConstructor;
 import ru.clevertec.eshop.model.SearchCriteria;
 import ru.clevertec.eshop.util.AppConstant;
 import ru.clevertec.eshop.util.parsing.DataParser;
@@ -13,11 +14,11 @@ import java.util.*;
 import static java.lang.Long.parseLong;
 
 public class PromoDAOFromFile implements PromoDAO<Promo> {
-    private final String filePath = Objects.requireNonNull(getClass().getClassLoader().getResource(AppConstant.PROMO_FILE))
-            .getPath();
+    private final String filePath = Objects.requireNonNull(getClass().getClassLoader()
+                    .getResource(AppConstant.PROMO_FILE)).getPath();
 
     @Override
-    public List<Promo> findAll() {
+    public List<Promo> findAll() throws DAOException {
         List<Promo> discountsList = new ArrayList<>();
 
         Map<String, Object> discountMap;
@@ -30,9 +31,9 @@ public class PromoDAOFromFile implements PromoDAO<Promo> {
                 discountsList.add(createPromo(discountMap));
             }
         } catch (FileNotFoundException e) {
-            throw new RuntimeException("Check file path to promo info. File is not fount", e);
+            throw new DAOException("Check file path to promo info. File is not fount", e);
         } catch (IOException e) {
-            throw new RuntimeException("Error in getting data from file", e);
+            throw new DAOException("Error in getting data from file", e);
         }
         return discountsList;
     }
@@ -59,7 +60,7 @@ public class PromoDAOFromFile implements PromoDAO<Promo> {
     }
 
     private Promo createPromo(Map<String, Object> map) {
-        Promo promo = new PromoConstructor().constructPromo(map);
+        Promo promo = new PromoConstructor().constructEntity(map);
         return promo;
     }
 }

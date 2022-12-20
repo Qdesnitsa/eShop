@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProductService<T> {
-    List<T> findAll();
-    Optional<T> findByID(Long entityId);
+    List<T> findAll() throws ServiceException;
+    Optional<T> findByID(Long entityId) throws ServiceException;
     List<Product> obtainValidatedProducts(String[] args) throws ServiceException;
 }

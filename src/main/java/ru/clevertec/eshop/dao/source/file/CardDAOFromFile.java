@@ -1,9 +1,9 @@
-package ru.clevertec.eshop.dao.impl.file.impl;
+package ru.clevertec.eshop.dao.source.file;
 
-import ru.clevertec.eshop.dao.impl.file.CardDAO;
+import ru.clevertec.eshop.dao.source.CardDAO;
 import ru.clevertec.eshop.model.SearchCriteria;
 import ru.clevertec.eshop.model.card.DiscountCard;
-import ru.clevertec.eshop.dao.impl.file.construction.CardConstructor;
+import ru.clevertec.eshop.dao.construction.CardConstructor;
 import ru.clevertec.eshop.util.AppConstant;
 import ru.clevertec.eshop.util.parsing.DataParser;
 

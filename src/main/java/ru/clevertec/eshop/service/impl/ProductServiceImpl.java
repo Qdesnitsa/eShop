@@ -1,8 +1,9 @@
 package ru.clevertec.eshop.service.impl;
 
 import ru.clevertec.eshop.dao.DAOFactory;
-import ru.clevertec.eshop.dao.FactoryProvider;
-import ru.clevertec.eshop.dao.impl.file.ProductDAO;
+import ru.clevertec.eshop.dao.DAOFactoryProvider;
+import ru.clevertec.eshop.dao.exception.DAOException;
+import ru.clevertec.eshop.dao.source.ProductDAO;
 import ru.clevertec.eshop.model.product.Product;
 import ru.clevertec.eshop.service.ProductService;
 import ru.clevertec.eshop.service.exception.ServiceException;
@@ -16,17 +17,27 @@ import static java.lang.Long.parseLong;
 
 public class ProductServiceImpl implements ProductService<Product> {
     private static final String CARD = "card";
-    FactoryProvider factoryProvider = DAOFactory.getInstance();
-    ProductDAO productDAO = factoryProvider.getProductDAO();
+    private DAOFactoryProvider factoryProvider = DAOFactory.getInstance();
+    private ProductDAO productDAO = factoryProvider.getProductDAO();
 
     @Override
-    public List<Product> findAll() {
-        return productDAO.findAll();
+    public List<Product> findAll() throws ServiceException {
+        try {
+            return productDAO.findAll();
+        } catch (DAOException e) {
+            //LOGGER.error(e);
+            throw new ServiceException("Failed to find all users from DAO", e);
+        }
     }
 
     @Override
-    public Optional<Product> findByID(Long entityId) {
-        return productDAO.findByID(entityId);
+    public Optional<Product> findByID(Long entityId) throws ServiceException {
+        try {
+            return productDAO.findByID(entityId);
+        } catch (DAOException e) {
+            //LOGGER.error(e);
+            throw new ServiceException("Failed to find product by id from DAO", e);
+        }
     }
 
     @Override
@@ -55,14 +66,16 @@ public class ProductServiceImpl implements ProductService<Product> {
     public List<Product> checkExistingProductId(Map<String, Integer> inputCriteria) throws ServiceException {
         List<Product> productList = new ArrayList<>();
         List<Long> notExistingProductId = new ArrayList<>();
+        Optional<Product> product = Optional.empty();
         for (Map.Entry<String, Integer> entry : inputCriteria.entrySet()) {
             if (!entry.getKey().equalsIgnoreCase(CARD)) {
-                Optional<Product> product = productDAO.findByID(parseLong(entry.getKey()));
-                if (product.isPresent()) {
-                    productList.add(product.get());
-                } else {
+                try {
+                    product = productDAO.findByID(parseLong(entry.getKey()));
+                } catch (DAOException e) {
+                    //LOGGER.error(e);
                     notExistingProductId.add(parseLong(entry.getKey()));
                 }
+                productList.add(product.get());
             }
         }
         if (!notExistingProductId.isEmpty()) {

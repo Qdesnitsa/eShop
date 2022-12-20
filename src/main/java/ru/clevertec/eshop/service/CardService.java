@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CardService<T> {
-    List<T> findAll();
-    Optional<T> findByID(Long entityId);
-    Optional<DiscountCard> findCardByNumber(int cardNumber);
+    List<T> findAll() throws ServiceException;
+    Optional<T> findByID(Long entityId) throws ServiceException;
+    Optional<DiscountCard> findCardByNumber(int cardNumber) throws ServiceException;
     Optional<DiscountCard> obtainValidatedCard(String[] args) throws ServiceException;
 }
