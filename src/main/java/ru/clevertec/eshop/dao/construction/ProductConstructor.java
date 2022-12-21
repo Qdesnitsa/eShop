@@ -7,10 +7,12 @@ import ru.clevertec.eshop.model.SearchCriteria;
 import ru.clevertec.eshop.model.promo.Promo;
 import ru.clevertec.eshop.model.product.Product;
 import ru.clevertec.eshop.service.ProductService;
+import ru.clevertec.eshop.service.PromoService;
 import ru.clevertec.eshop.service.ServiceFactory;
 import ru.clevertec.eshop.service.ServiceFactoryProvider;
 import ru.clevertec.eshop.service.exception.ServiceException;
 import ru.clevertec.eshop.service.impl.ProductServiceImpl;
+import ru.clevertec.eshop.service.impl.PromoServiceImpl;
 
 import java.math.BigDecimal;
 import java.sql.ResultSet;
@@ -25,10 +27,10 @@ public class ProductConstructor implements EntityConstructor<Product> {
 
     @Override
     public Product constructEntity(Map<String, Object> map) {
-        ProductService productService = new ProductServiceImpl();
+        PromoService promoService = new PromoServiceImpl();
         List<Promo> promoList = null;
         try {
-            promoList = productService.findAll();
+            promoList = promoService.findAll();
         } catch (ServiceException e) {
             //LOGGER.error(e);
         }

@@ -17,7 +17,7 @@ import static java.lang.Integer.parseInt;
 import static java.lang.Long.parseLong;
 
 public class CardDAOFromFile implements CardDAO<DiscountCard> {
-    private final String filePath = Objects.requireNonNull(getClass().getClassLoader().getResource(AppConstant.CARDS_FILE)).getPath();
+    private final String filePath = AppConstant.CARDS_FILE;
 
     @Override
     public List<DiscountCard> findAll() {

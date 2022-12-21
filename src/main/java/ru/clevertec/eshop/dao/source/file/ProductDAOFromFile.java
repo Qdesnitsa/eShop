@@ -18,8 +18,7 @@ import java.util.*;
 import static java.lang.Long.parseLong;
 
 public class ProductDAOFromFile implements ProductDAO<Product> {
-    private final String filePath = Objects.requireNonNull(getClass().getClassLoader()
-            .getResource(AppConstant.PRODUCTS_FILE)).getPath();
+    private final String filePath = AppConstant.PRODUCTS_FILE;
 
     @Override
     public List<Product> findAll() throws DAOException {

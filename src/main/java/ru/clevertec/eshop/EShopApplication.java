@@ -10,8 +10,7 @@ import java.io.IOException;
 
 @SpringBootApplication
 public class EShopApplication {
-    public static void main(String[] args) throws ServiceException, IOException, DAOException {
-        args = new String[]{"1-1", "2-2", "2-20", "card-5678"};
+    public static void main(String[] args) throws ServiceException, IOException{
         SpringApplication.run(EShopApplication.class, args);
         InputConsoleDataProcessor inputFromConsole = new InputConsoleDataProcessor();
         inputFromConsole.obtainCheck(args);

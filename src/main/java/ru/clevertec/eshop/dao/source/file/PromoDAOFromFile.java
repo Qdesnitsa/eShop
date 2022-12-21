@@ -14,8 +14,7 @@ import java.util.*;
 import static java.lang.Long.parseLong;
 
 public class PromoDAOFromFile implements PromoDAO<Promo> {
-    private final String filePath = Objects.requireNonNull(getClass().getClassLoader()
-                    .getResource(AppConstant.PROMO_FILE)).getPath();
+    private final String filePath = AppConstant.PROMO_FILE;
 
     @Override
     public List<Promo> findAll() throws DAOException {

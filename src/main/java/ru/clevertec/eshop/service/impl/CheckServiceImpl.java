@@ -61,7 +61,7 @@ public class CheckServiceImpl implements CheckService<Optional<CheckDTO>> {
             }
         }
         checkDTO.get().setCheckSumBeforeCard(checkSum);
-        if (discountFromCard != 0) {
+        if (discountFromCard != 0.0) {
             BigDecimal totalAmountToPay = checkSum
                     .subtract(checkSum.multiply(BigDecimal.valueOf(discountFromCard)));
             checkDTO.get().setTotalSum(totalAmountToPay);

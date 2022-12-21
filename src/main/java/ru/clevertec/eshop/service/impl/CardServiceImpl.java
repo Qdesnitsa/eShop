@@ -58,11 +58,14 @@ public class CardServiceImpl implements CardService<DiscountCard> {
     public Optional<DiscountCard> obtainValidatedCard(String[] args) throws ServiceException {
         Map<String, Integer> map = obtainValidatedCriteria(args);
         Optional<DiscountCard> discountCard = checkDiscountCardByNumber(map);
+        if (discountCard == null) {
+            discountCard = Optional.ofNullable(discountCard.get());
+        }
         return discountCard;
     }
 
     private Optional<DiscountCard> checkDiscountCardByNumber(Map<String, Integer> map) throws ServiceException {
-        Optional<DiscountCard> discountCard = null;
+        Optional<DiscountCard> discountCard = Optional.empty();
         if (map.containsKey(CARD)) {
             try {
                 discountCard = cardDAO.findCardByNumber(Integer.parseInt(map.get(CARD).toString()));
