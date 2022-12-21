@@ -1,5 +1,7 @@
 package ru.clevertec.eshop.service.impl;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.clevertec.eshop.dao.DAOFactory;
 import ru.clevertec.eshop.dao.DAOFactoryProvider;
 import ru.clevertec.eshop.dao.exception.DAOException;
@@ -15,29 +17,33 @@ import java.util.*;
 import static java.lang.Integer.valueOf;
 import static java.lang.Long.parseLong;
 
+@Service
+@Transactional
 public class ProductServiceImpl implements ProductService<Product> {
     private static final String CARD = "card";
     private DAOFactoryProvider factoryProvider = DAOFactory.getInstance();
     private ProductDAO productDAO = factoryProvider.getProductDAO();
 
     @Override
-    public List<Product> findAll() throws ServiceException {
+    public List<Product> findAll() {
+        List<Product> products = null;
         try {
-            return productDAO.findAll();
+            products = productDAO.findAll();
         } catch (DAOException e) {
             //LOGGER.error(e);
-            throw new ServiceException("Failed to find all users from DAO", e);
         }
+        return products;
     }
 
     @Override
-    public Optional<Product> findByID(Long entityId) throws ServiceException {
+    public Optional<Product> findByID(Long entityId) {
+        Optional<Product> product = Optional.empty();
         try {
-            return productDAO.findByID(entityId);
+            product = productDAO.findByID(entityId);
         } catch (DAOException e) {
             //LOGGER.error(e);
-            throw new ServiceException("Failed to find product by id from DAO", e);
         }
+        return product;
     }
 
     @Override
@@ -48,7 +54,7 @@ public class ProductServiceImpl implements ProductService<Product> {
         return correctProductsQuantityAndId;
     }
 
-    public Map<String, Integer> obtainValidatedCriteria(String[] args) throws ServiceException {
+    private Map<String, Integer> obtainValidatedCriteria(String[] args) throws ServiceException {
         List<String> formattedArgs = DataParser.parseLine(args);
         List<String> validatedCriteria = DataValidator.validateCriteria(formattedArgs);
         Map<String, Integer> validatedMap = new HashMap<>();
@@ -63,7 +69,7 @@ public class ProductServiceImpl implements ProductService<Product> {
         return validatedMap;
     }
 
-    public List<Product> checkExistingProductId(Map<String, Integer> inputCriteria) throws ServiceException {
+    private List<Product> checkExistingProductId(Map<String, Integer> inputCriteria) throws ServiceException {
         List<Product> productList = new ArrayList<>();
         List<Long> notExistingProductId = new ArrayList<>();
         Optional<Product> product = Optional.empty();
@@ -84,7 +90,7 @@ public class ProductServiceImpl implements ProductService<Product> {
         return productList;
     }
 
-    public List<Product> checkExistingProductQuantity(List<Product> products, Map<String, Integer> inputCriteria) throws ServiceException {
+    private List<Product> checkExistingProductQuantity(List<Product> products, Map<String, Integer> inputCriteria) throws ServiceException {
         List<Product> productList = new ArrayList<>();
         List<Product> notExistingProductQuantity = new ArrayList<>();
         for (int i = 0; i < products.size(); i++) {

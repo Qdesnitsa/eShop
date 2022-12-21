@@ -9,8 +9,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-public interface CheckService {
-    boolean save(Optional<CheckDTO> checkDTO) throws IOException, ServiceException;
-    Optional<CheckDTO> obtainCheckDTO(List<Product> products, Optional<DiscountCard> card);
-    String obtainFormattedCheck(Optional<CheckDTO> checkDTO);
+public interface CheckService<T> {
+    boolean save(T checkDTO) throws IOException, ServiceException;
+    T obtainCheckDTO(List<Product> products, Optional<DiscountCard> card);
+    String obtainFormattedFileCheck(T checkDTO);
+    String obtainFormattedHTMLCheck(T checkDTO);
 }

@@ -17,7 +17,7 @@ public class CheckDAOFromFile implements CheckDAO<Optional<CheckDTO>> {
     @Override
     public boolean save(Optional<CheckDTO> checkDTO) {
         CheckService checkService = new CheckServiceImpl();
-        String checkString = checkService.obtainFormattedCheck(checkDTO);
+        String checkString = checkService.obtainFormattedFileCheck(checkDTO);
         try (FileWriter writer = new FileWriter(filePath, true)) {
             writer.write(checkString);
             writer.append("\n\n\n");

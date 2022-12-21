@@ -1,5 +1,7 @@
 package ru.clevertec.eshop.service.impl;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.clevertec.eshop.dao.DAOFactory;
 import ru.clevertec.eshop.dao.DAOFactoryProvider;
 import ru.clevertec.eshop.dao.exception.DAOException;
@@ -10,6 +12,7 @@ import ru.clevertec.eshop.service.exception.ServiceException;
 import ru.clevertec.eshop.service.validation.DataValidator;
 import ru.clevertec.eshop.util.parsing.DataParser;
 
+import javax.websocket.server.ServerEndpoint;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,9 +20,12 @@ import java.util.Optional;
 
 import static java.lang.Integer.valueOf;
 
+@Service
+@Transactional
 public class CardServiceImpl implements CardService<DiscountCard> {
     private DAOFactoryProvider factoryProvider = DAOFactory.getInstance();
     private CardDAO cardDAO = factoryProvider.getCardDAO();
+    private static final String CARD = "card";
 
     @Override
     public List<DiscountCard> findAll() throws ServiceException {
@@ -47,7 +53,6 @@ public class CardServiceImpl implements CardService<DiscountCard> {
             throw new ServiceException("Failed attempt to find card by id in the database", e);
         }
     }
-    private static final String CARD = "card";
 
     @Override
     public Optional<DiscountCard> obtainValidatedCard(String[] args) throws ServiceException {
@@ -56,7 +61,7 @@ public class CardServiceImpl implements CardService<DiscountCard> {
         return discountCard;
     }
 
-    public Optional<DiscountCard> checkDiscountCardByNumber(Map<String, Integer> map) throws ServiceException {
+    private Optional<DiscountCard> checkDiscountCardByNumber(Map<String, Integer> map) throws ServiceException {
         Optional<DiscountCard> discountCard = null;
         if (map.containsKey(CARD)) {
             try {

@@ -10,7 +10,7 @@ import ru.clevertec.eshop.model.product.Product;
 import ru.clevertec.eshop.service.*;
 import ru.clevertec.eshop.service.exception.ServiceException;
 
-public class InputDataProcessor {
+public class InputConsoleDataProcessor {
     ServiceFactoryProvider serviceFactory = ServiceFactory.getInstance();
     CheckService checkService= serviceFactory.getCheckService();
 
@@ -20,7 +20,7 @@ public class InputDataProcessor {
     public String obtainCheck(String[] args) throws ServiceException, IOException {
         List<Product> products = productService.obtainValidatedProducts(args);
         Optional<DiscountCard> discountCard = cardService.obtainValidatedCard(args);
-        Optional<CheckDTO> check = checkService.obtainCheckDTO(products, discountCard);
+        Optional<CheckDTO> check = (Optional<CheckDTO>) checkService.obtainCheckDTO(products, discountCard);
         checkService.save(check);
         return check.get().toString();
     }

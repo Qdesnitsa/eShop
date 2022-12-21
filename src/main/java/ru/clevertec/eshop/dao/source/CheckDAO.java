@@ -5,6 +5,7 @@ import ru.clevertec.eshop.model.Check;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 public interface CheckDAO<T> {

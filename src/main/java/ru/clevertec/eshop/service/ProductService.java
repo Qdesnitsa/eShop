@@ -9,5 +9,5 @@ import java.util.Optional;
 public interface ProductService<T> {
     List<T> findAll() throws ServiceException;
     Optional<T> findByID(Long entityId) throws ServiceException;
-    List<Product> obtainValidatedProducts(String[] args) throws ServiceException;
+    List<T> obtainValidatedProducts(String[] args) throws ServiceException;
 }

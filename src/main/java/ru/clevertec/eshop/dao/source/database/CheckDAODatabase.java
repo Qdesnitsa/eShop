@@ -10,6 +10,7 @@ import ru.clevertec.eshop.model.Check;
 import ru.clevertec.eshop.model.product.Product;
 
 import java.sql.*;
+import java.util.List;
 import java.util.Optional;
 
 public class CheckDAODatabase implements CheckDAO<Optional<CheckDTO>> {

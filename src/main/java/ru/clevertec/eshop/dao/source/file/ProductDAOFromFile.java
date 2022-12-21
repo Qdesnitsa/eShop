@@ -5,6 +5,7 @@ import ru.clevertec.eshop.dao.source.ProductDAO;
 import ru.clevertec.eshop.dao.construction.ProductConstructor;
 import ru.clevertec.eshop.model.SearchCriteria;
 import ru.clevertec.eshop.model.product.Product;
+import ru.clevertec.eshop.service.exception.ServiceException;
 import ru.clevertec.eshop.util.AppConstant;
 import ru.clevertec.eshop.util.parsing.DataParser;
 
@@ -63,7 +64,7 @@ public class ProductDAOFromFile implements ProductDAO<Product> {
         return Optional.ofNullable(product);
     }
 
-    private Product createProduct(Map<String, Object> map) throws DAOException {
+    private Product createProduct(Map<String, Object> map) {
         Product product = new ProductConstructor().constructEntity(map);
         return product;
     }

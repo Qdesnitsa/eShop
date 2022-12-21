@@ -6,6 +6,11 @@ import ru.clevertec.eshop.dao.source.file.PromoDAOFromFile;
 import ru.clevertec.eshop.model.SearchCriteria;
 import ru.clevertec.eshop.model.promo.Promo;
 import ru.clevertec.eshop.model.product.Product;
+import ru.clevertec.eshop.service.ProductService;
+import ru.clevertec.eshop.service.ServiceFactory;
+import ru.clevertec.eshop.service.ServiceFactoryProvider;
+import ru.clevertec.eshop.service.exception.ServiceException;
+import ru.clevertec.eshop.service.impl.ProductServiceImpl;
 
 import java.math.BigDecimal;
 import java.sql.ResultSet;
@@ -17,11 +22,16 @@ import static java.lang.Integer.parseInt;
 import static java.lang.Long.parseLong;
 
 public class ProductConstructor implements EntityConstructor<Product> {
-    private PromoDAO productDAO = new PromoDAOFromFile();
 
     @Override
-    public Product constructEntity(Map<String, Object> map) throws DAOException {
-        List<Promo> promoList = productDAO.findAll();
+    public Product constructEntity(Map<String, Object> map) {
+        ProductService productService = new ProductServiceImpl();
+        List<Promo> promoList = null;
+        try {
+            promoList = productService.findAll();
+        } catch (ServiceException e) {
+            //LOGGER.error(e);
+        }
         return Product.builder()
                 .id(parseLong((String) map.get(SearchCriteria.Product.ID.toString())))
                 .name((String) map.get(SearchCriteria.Product.NAME.toString()))
