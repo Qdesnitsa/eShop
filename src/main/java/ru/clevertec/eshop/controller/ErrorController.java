@@ -1,4 +1,4 @@
-package ru.clevertec.eshop.controller.console;
+package ru.clevertec.eshop.controller;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

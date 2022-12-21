@@ -2,6 +2,7 @@ package ru.clevertec.eshop.model.card;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Objects;
 
 public class DiscountCard implements Serializable {
 
@@ -46,6 +47,19 @@ public class DiscountCard implements Serializable {
 
     public void setCardLevel(CardLevel cardLevel) {
         this.cardLevel = cardLevel;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DiscountCard that = (DiscountCard) o;
+        return cardNumber == that.cardNumber && Objects.equals(id, that.id) && cardLevel == that.cardLevel;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, cardLevel, cardNumber);
     }
 
     @Override

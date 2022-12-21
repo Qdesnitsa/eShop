@@ -10,7 +10,6 @@ import ru.clevertec.eshop.model.Check;
 import ru.clevertec.eshop.model.product.Product;
 
 import java.sql.*;
-import java.util.List;
 import java.util.Optional;
 
 public class CheckDAODatabase implements CheckDAO<Optional<CheckDTO>> {
@@ -22,8 +21,8 @@ public class CheckDAODatabase implements CheckDAO<Optional<CheckDTO>> {
             "SELECT * FROM checks ORDER BY ID DESC LIMIT 1";
     private static final String SQL_ADD_CHECK_PRODUCT =
             "INSERT INTO checks_products (check_id, product_id, products_quantity) values(?,?,?)";
-    EntityConstructor entityConstructor = new CheckConstructor();
-    CheckMapper checkMapper = new CheckMapper();
+    private EntityConstructor entityConstructor = new CheckConstructor();
+    private CheckMapper checkMapper = new CheckMapper();
 
     public boolean save(Check check) throws DAOException {
         boolean isCheckAdded = false;

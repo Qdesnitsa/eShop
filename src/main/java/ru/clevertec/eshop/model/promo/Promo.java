@@ -4,6 +4,7 @@ import ru.clevertec.eshop.model.card.DiscountCard;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Promo implements Serializable {
     @Serial
@@ -21,6 +22,20 @@ public class Promo implements Serializable {
         this.name = name;
         this.value = value;
         this.productsQuantity = productsQuantity;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Promo promo = (Promo) o;
+        return Double.compare(promo.value, value) == 0 && productsQuantity == promo.productsQuantity &&
+                Objects.equals(id, promo.id) && Objects.equals(name, promo.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, value, productsQuantity);
     }
 
     public Long getId() {

@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class ProductDAODatabase implements ProductDAO<Product> {
-    EntityConstructor entityConstructor = new ProductConstructor();
+    private EntityConstructor entityConstructor = new ProductConstructor();
     private static final String SQL_FIND_ALL_PRODUCTS =
             "SELECT products.id AS product_id, products.name, products.price, products.quantity, " +
                     "promos.id AS promo_id, promos.promo_name, promos.promo_value, promos.products_quantity " +

@@ -1,4 +1,4 @@
-package ru.clevertec.eshop.controller.console;
+package ru.clevertec.eshop.controller;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;

@@ -5,6 +5,7 @@ import ru.clevertec.eshop.model.promo.Promo;
 import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class Product implements Serializable {
     @Serial
@@ -24,6 +25,21 @@ public class Product implements Serializable {
         this.discount = discount;
         this.price = price;
         this.quantity = quantityAvailable;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return quantity == product.quantity && Objects.equals(id, product.id) &&
+                Objects.equals(name, product.name) && Objects.equals(discount, product.discount) &&
+                Objects.equals(price, product.price);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, discount, price, quantity);
     }
 
     @Override

@@ -6,6 +6,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 public class Check implements Serializable {
     @Serial
@@ -27,6 +28,20 @@ public class Check implements Serializable {
         this.shopId = shopId;
         this.dateTime = dateTime;
         this.products = products;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Check check = (Check) o;
+        return shopId == check.shopId && Objects.equals(id, check.id) &&
+                Objects.equals(dateTime, check.dateTime) && Objects.equals(products, check.products);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, shopId, dateTime, products);
     }
 
     public Long getId() {
