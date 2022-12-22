@@ -15,6 +15,7 @@
     - http://localhost:8080/api/products/{id} - вывод продукта по id в формате JSON
     - http://localhost:8080/api/checks?args=1-1,2-5,3-8,card-1234 - формирование чека, вывод в формате HTML
  - Запуск приложения, Postgres, исполнение DDL в Docker:
+    - в application.properties установить spring.datasource.url=jdbc:postgresql://postgres:5432/eshop
     - gradle build
     - docker-compose up
  
