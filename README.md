@@ -10,10 +10,10 @@
  - Работа с источниками данных регулируется в классе package ru.clevertec.eshop.dao.DAOFactory
     - = new DAOFactoryProviderFile() - чтение данных из файлов, запись чека в файл; 
     - = new DAOFactoryProviderDatabase() - чтение данных из базы данных, запись чека в базу данных
- - HTTP-запросы:
+ - HTTP-запрос Get, endpoints:
     - http://localhost:8080/api/products - вывод всех продуктов в формате JSON
     - http://localhost:8080/api/products/{id} - вывод продукта по id в формате JSON
-    - http://localhost:8080/api/checks?args=1-1,2-5,3-8,card-1234 - формирование чека, вывод в формате HTML
+    - http://localhost:8080/api/checks?args=1-1,2-5,3-8,card-1234 - формирование чека, вывод в формате HTML. Где args - параметры в формате itemId-quantity и card-cardNumber. 
  - Запуск приложения, Postgres, исполнение DDL в Docker:
     - в application.properties установить spring.datasource.url=jdbc:postgresql://postgres:5432/eshop
     - gradle build
